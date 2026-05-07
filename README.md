@@ -1,2 +1,6 @@
 # neovim-dev-env
-Developer environment with NeoVim, LSP servers (Bash, C/C++, Python, Lua) and tmux
+
+Container for Developer environment with NeoVim, LSP servers (Bash, C/C++, Python, Lua) and tmux
+
+It's difficult to manually support the same development environment on several workplaces (work PC, home PC, VPS, etc.).
+The goal of this project - container for development quickstart with NeoVim on Linux PC.
