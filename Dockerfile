@@ -7,6 +7,8 @@ FROM debian:stable-slim
 # Yandex APT mirror is used as more available and fast
 COPY files/debian.sources.stable /etc/apt/sources.list.d/debian.sources
 
+ENV LUALS_VER=3.18.2
+
 RUN apt update && \
     apt install --yes --no-install-recommends \
       # ep.sh deps:
@@ -15,52 +17,39 @@ RUN apt update && \
       bash \
       # NeoVim deps:
       neovim \
-    && \
-    apt clean
-
-RUN apt update
-
-RUN apt install --yes --no-install-recommends \
-  python3 \
-  python3-pip
-
-# Python LSP
-RUN pip install --break-system-packages pyright
-
-RUN apt install --yes --no-install-recommends \
-    # Clang LSP
+      git-core \
+      # pyright deps:
+      python3 \
+      python3-pip \
+      # Clang LSP
       clangd \
-      clang-tidy
-
-RUN apt install --yes --no-install-recommends \
-    # Run container per file is overhead. Use console manager to use single container per user.
-    tmux
-#
-# Lua LSP
-#
-ENV LUALS_VER=3.18.2
-
-ADD --checksum=sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5 \
-    --unpack=true \
-    "https://github.com/LuaLS/lua-language-server/releases/download/$LUALS_VER/lua-language-server-$LUALS_VER-linux-x64.tar.gz" \
-    /opt/lua-language-server/
-
-RUN ln -s /opt/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
-#
-# Bash LSP
-#
-RUN apt install --yes --no-install-recommends \
+      clang-tidy \
+      # Run container per file is overhead. Use console manager to use single container per user.
+      tmux \
+      # Lua LSP deps:
+      lua5.1 \
+      # Bash LSP deps:
       shellcheck \
       shfmt \
       npm \
       nodejs \
-      && \
-    npm i -g bash-language-server
-
-RUN apt install --yes --no-install-recommends \
-      git-core
-
-RUN apt clean
+    && \
+    apt clean
+#
+# Python LSP
+#
+RUN pip install --break-system-packages pyright
+#
+# Lua LSP
+#
+ADD --checksum=sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5 \
+    --unpack=true \
+    "https://github.com/LuaLS/lua-language-server/releases/download/$LUALS_VER/lua-language-server-$LUALS_VER-linux-x64.tar.gz" \
+    /opt/lua-language-server/
+#
+# Bash LSP
+#
+RUN npm i -g bash-language-server
 
 # ep = entrypoint
 COPY files/ep.sh /root/ep.sh
