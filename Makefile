@@ -9,4 +9,10 @@ help:     ## Show this help
 	@sed -ne '/@sed/!s/:.*## /:\t/p' $(MAKEFILE_LIST)
 
 run: img
-	docker run --rm -ti -e ENV_USER="$$USER" -e ENV_USER_ID="$$(id -u)" -e ENV_USER_GROUP_ID="$$(id -g)" -v "$$HOME/.config/nvim":"$$HOME/.config/nvim":ro $(NAME)
+	docker run --rm -ti \
+		-e ENV_USER="$$USER" \
+		-e ENV_USER_ID="$$(id -u)" \
+		-e ENV_USER_GROUP_ID="$$(id -g)" \
+		-v "$$HOME/.config/nvim":"$$HOME/.config/nvim" \
+		-v "$$HOME/.local/share/nvim":"$$HOME/.local/share/nvim" \
+		$(NAME)
