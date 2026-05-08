@@ -1,0 +1,5 @@
+Types: deb
+URIs: http://mirror.yandex.ru/debian
+Suites: unstable
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.pgp
