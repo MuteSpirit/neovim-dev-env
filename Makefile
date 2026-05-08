@@ -8,7 +8,7 @@ img: Dockerfile   ## Build Docker image
 help:     ## Show this help
 	@sed -ne '/@sed/!s/:.*## /:\t/p' $(MAKEFILE_LIST)
 
-run: img
+define RunCmd
 	docker run --rm -ti \
 		--env ENV_USER="$$USER" \
 		--env ENV_USER_ID="$$(id -u)" \
@@ -19,3 +19,10 @@ run: img
 		--volume "$$(pwd):/ws" \
 		--workdir "/ws" \
 		$(NAME) "cd /ws; tmux"
+endef
+
+run: img
+	$(call RunCmd)
+
+run-as-is:
+	$(call RunCmd)
