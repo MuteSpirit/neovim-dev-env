@@ -20,10 +20,14 @@ RUN apt update && \
       # Dockerfile deps:
       bash \
       bash-completion \
-      git-core \
+      git \
+      git-lfs \
+      git-man \
+      ssh \
       # ep.sh deps:
       adduser \
       # NeoVim deps:
+      ripgrep \
       neovim \
       # Run container per file is overhead. Use console manager to use single container per user.
       tmux \
@@ -40,6 +44,8 @@ RUN apt update && \
       shfmt \
       npm \
       nodejs \
+      # Useful tools
+      less \
     && \
     apt clean && \
     # Python LSP
