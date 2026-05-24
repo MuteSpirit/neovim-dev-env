@@ -47,6 +47,12 @@ RUN apt update && \
       nodejs \
       # Useful tools
       less \
+      # Compilers/interpreters
+      clang \
+      gcc \
+      make \
+      gawk \
+      build-essential \
     && \
     apt clean && \
     # Python LSP
