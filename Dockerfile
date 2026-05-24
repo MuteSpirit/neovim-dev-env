@@ -24,6 +24,7 @@ RUN apt update && \
       git-lfs \
       git-man \
       ssh \
+      locales \
       # ep.sh deps:
       adduser \
       # NeoVim deps:
@@ -59,6 +60,15 @@ ADD --checksum=sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778
     --unpack=true \
     "https://github.com/LuaLS/lua-language-server/releases/download/$LUALS_VER/lua-language-server-$LUALS_VER-linux-x64.tar.gz" \
     /opt/lua-language-server/
+
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US
+ENV LC_ALL=en_US.UTF-8
 
 # ep = entrypoint
 COPY files/ep.sh /root/ep.sh
