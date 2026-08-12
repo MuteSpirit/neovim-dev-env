@@ -81,4 +81,10 @@ COPY files/ep.sh /root/ep.sh
 ENTRYPOINT ["/root/ep.sh"]
 
 CMD ["/bin/bash"]
-
+#
+# NeoVim fonts and icons
+# Following
+#  https://github.com/ryanoasis/nerd-fonts#font-installation
+#  https://github.com/ryanoasis/vim-devicons
+RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /opt/nerd-fonts && \
+    /opt/nerd-fonts/install.sh --install-to-system-path CodeNewRoman

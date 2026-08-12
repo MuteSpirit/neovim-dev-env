@@ -3,7 +3,7 @@
 NAME ?= neovim-dev-env
 
 img: Dockerfile   ## Build Docker image
-	docker build -t $(NAME) .
+	docker build --ssh default -t $(NAME) .
 
 help:     ## Show this help
 	@sed -ne '/@sed/!s/:.*## /:\t/p' $(MAKEFILE_LIST)
