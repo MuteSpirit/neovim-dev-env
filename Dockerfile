@@ -30,6 +30,8 @@ RUN apt update && \
       # NeoVim deps:
       ripgrep \
       neovim \
+      # Rendering Markdown into HTML
+      pandoc \
       # Run container per file is overhead. Use console manager to use single container per user.
       tmux \
       # pyright deps:
