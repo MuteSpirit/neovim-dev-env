@@ -1,9 +1,14 @@
-.PHONY: img run help
+.PHONY: img docker-img podman-img run help
 
 NAME ?= neovim-dev-env
 
-img: Dockerfile   ## Build Docker image
-	docker build --ssh default -t $(NAME) .
+img: docker-img podman-img
+
+docker-img: Dockerfile   ## Build Docker and Podman images
+	docker build --ssh default -t "$(NAME)" .
+
+podman-img: Containerfile
+	podman build -t "$(NAME)" .
 
 help:     ## Show this help
 	@sed -ne '/@sed/!s/:.*## /:\t/p' $(MAKEFILE_LIST)

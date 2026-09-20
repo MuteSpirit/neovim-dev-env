@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # Debian "slim" image has lower size then regular Debian or Ubuntu. 
 # But it's still with APT package manager.
 #
@@ -17,7 +15,6 @@ ENV LUALS_VER=3.18.2
 
 RUN apt update && \
     apt install --yes --no-install-recommends \
-      # Dockerfile deps:
       bash \
       bash-completion \
       git \
@@ -66,11 +63,19 @@ RUN apt update && \
 #
 # Lua LSP
 #
-ADD --checksum=sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5 \
-    --unpack=true \
-    "https://github.com/LuaLS/lua-language-server/releases/download/$LUALS_VER/lua-language-server-$LUALS_VER-linux-x64.tar.gz" \
-    /opt/lua-language-server/
-
+RUN cd /tmp && \
+    wget -O luals.tar.gz "https://github.com/LuaLS/lua-language-server/releases/download/$LUALS_VER/lua-language-server-$LUALS_VER-linux-x64.tar.gz" && \
+    mkdir -p /opt/lua-language-server/ && \
+    cd /opt/lua-language-server/ && \
+    tar xf /tmp/luals.tar.gz && \
+    rm /tmp/luals.tar.gz
+#
+# NeoVim fonts and icons
+# Following
+#  https://github.com/ryanoasis/nerd-fonts#font-installation
+#  https://github.com/ryanoasis/vim-devicons
+# RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /opt/nerd-fonts && \
+#     /opt/nerd-fonts/install.sh install CodeNewRoman
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
@@ -81,14 +86,7 @@ ENV LANGUAGE=en_US
 ENV LC_ALL=en_US.UTF-8
 
 # ep = entrypoint
-COPY files/docker/ep.sh /root/ep.sh
+COPY files/podman/ep.sh /root/ep.sh
 ENTRYPOINT ["/root/ep.sh"]
 
 CMD ["/bin/bash"]
-#
-# NeoVim fonts and icons
-# Following
-#  https://github.com/ryanoasis/nerd-fonts#font-installation
-#  https://github.com/ryanoasis/vim-devicons
-RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /opt/nerd-fonts && \
-    /opt/nerd-fonts/install.sh install CodeNewRoman
