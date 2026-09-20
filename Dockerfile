@@ -47,6 +47,8 @@ RUN apt update && \
       nodejs \
       # Useful tools
       less \
+      curl \
+      wget \
       # Compilers/interpreters
       clang \
       gcc \
@@ -87,4 +89,4 @@ CMD ["/bin/bash"]
 #  https://github.com/ryanoasis/nerd-fonts#font-installation
 #  https://github.com/ryanoasis/vim-devicons
 RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /opt/nerd-fonts && \
-    /opt/nerd-fonts/install.sh --install-to-system-path CodeNewRoman
+    /opt/nerd-fonts/install.sh install CodeNewRoman
