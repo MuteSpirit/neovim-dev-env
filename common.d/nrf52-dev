@@ -1,0 +1,1 @@
+RUN pip3 install --break-system-packages adafruit-nrfutil

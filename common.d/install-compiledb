@@ -1,0 +1,5 @@
+#
+# Tool for compilation database (compiler_commands.json) generation
+#
+RUN pip3 install --user --break-system-packages compiledb
+

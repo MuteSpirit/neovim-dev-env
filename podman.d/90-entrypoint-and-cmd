@@ -1,0 +1,5 @@
+# ep = entrypoint
+COPY files/podman/ep.sh /root/ep.sh
+ENTRYPOINT ["/root/ep.sh"]
+
+CMD ["/bin/bash"]

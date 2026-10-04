@@ -1,0 +1,48 @@
+RUN apt update && \
+    apt install --yes --no-install-recommends \
+      bash \
+      bash-completion \
+      git \
+      git-lfs \
+      git-man \
+      # to sign commits 
+      gnupg \
+      gpg \
+      ssh \
+      locales \
+      # ep.sh deps:
+      adduser \
+      # NeoVim deps:
+      ripgrep \
+      neovim \
+      # Rendering Markdown into HTML
+      pandoc \
+      # Run container per file is overhead. Use console manager to use single container per user.
+      tmux \
+      # pyright deps:
+      python3 \
+      python3-pip \
+      # Clang LSP
+      clangd \
+      clang-tidy \
+      # Lua LSP deps:
+      lua5.1 \
+      # Bash LSP deps:
+      shellcheck \
+      shfmt \
+      npm \
+      nodejs \
+      # Useful tools
+      less \
+      curl \
+      wget \
+      # Compilers/interpreters/debuggers
+      clang \
+      gcc \
+      make \
+      gawk \
+      build-essential \
+      gdb \
+    && \
+    apt clean
+

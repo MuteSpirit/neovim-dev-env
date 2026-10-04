@@ -1,0 +1,5 @@
+#
+# Python LSP
+#
+RUN pip3 install --break-system-packages pyright
+
